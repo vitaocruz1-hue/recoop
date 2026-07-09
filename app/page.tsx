@@ -20,6 +20,9 @@ import {
   MapPin,
   Clock,
   ArrowRight,
+  Sprout,
+  Users,
+  Leaf,
 } from "lucide-react";
 
 export default function Home() {
@@ -180,6 +183,8 @@ export default function Home() {
           {[
             {
               tag: "Crédito rural",
+              icon: Sprout,
+              tint: "bg-gradient-to-br from-moss/50 to-forest/80",
               title:
                 "Sicoob espera liberar até R$ 49 bi de crédito rural na safra 2023/24",
               text: "Expectativa de forte crescimento na oferta de crédito rural em diversas linhas.",
@@ -187,6 +192,8 @@ export default function Home() {
             },
             {
               tag: "Cooperativismo",
+              icon: Users,
+              tint: "bg-gradient-to-br from-emerald/70 to-forest/80",
               title:
                 "Cooperativas de crédito operam em mais da metade dos municípios",
               text: "O cooperativismo de crédito cresceu acima do restante do Sistema Financeiro Nacional.",
@@ -194,6 +201,8 @@ export default function Home() {
             },
             {
               tag: "ESG",
+              icon: Leaf,
+              tint: "bg-gradient-to-br from-moss/60 to-emerald/70",
               title: "A due diligence ESG",
               text: "Integridade empresarial e agenda ESG ganharam protagonismo nos negócios.",
               href: "https://recoop.com.br/a-due-diligence-esg/",
@@ -204,8 +213,13 @@ export default function Home() {
                 href={p.href}
                 className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-emerald/30 backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-lime/40"
               >
-                <div className="relative flex h-40 items-end overflow-hidden p-6">
-                  <div className="animated-mesh absolute inset-0 opacity-70 transition-transform duration-700 group-hover:scale-110" />
+                <div className={`relative flex h-40 items-end overflow-hidden p-6 ${p.tint}`}>
+                  <div className="animated-mesh absolute inset-0 opacity-40 transition-transform duration-700 group-hover:scale-110" />
+                  <p.icon
+                    className="pointer-events-none absolute -right-4 -top-4 text-lime/15 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6"
+                    size={112}
+                    strokeWidth={1.25}
+                  />
                   <span className="relative rounded-full bg-lime px-3 py-1 text-xs font-semibold text-forest">
                     {p.tag}
                   </span>

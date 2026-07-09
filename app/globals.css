@@ -14,6 +14,15 @@
   --lime: #b4e04a; /* verde-limão (acento/CTA) */
   --mint: #cfe9d8; /* verde-claro (textos suaves no escuro) */
   --cream: #f2f7f2; /* fundo claro */
+
+  /* mesmas cores em RGB "cru" — necessário para o Tailwind aplicar opacidade (bg-emerald/30 etc) */
+  --ink-rgb: 6 21 18;
+  --forest-rgb: 11 47 42;
+  --emerald-rgb: 17 66 57;
+  --moss-rgb: 30 122 95;
+  --lime-rgb: 180 224 74;
+  --mint-rgb: 207 233 216;
+  --cream-rgb: 242 247 242;
 }
 
 * {
