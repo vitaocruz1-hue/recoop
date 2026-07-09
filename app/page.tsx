@@ -6,9 +6,6 @@ import BrazilMap from "@/components/BrazilMap";
 import { ACTIVE } from "@/data/brazil-map";
 import { Reveal, WordReveal } from "@/components/Reveal";
 import {
-  ShieldCheck,
-  Handshake,
-  TrendingUp,
   Banknote,
   Headset,
   PhoneCall,
@@ -23,6 +20,9 @@ import {
   Sprout,
   Users,
   Leaf,
+  Gavel,
+  Building2,
+  Handshake,
 } from "lucide-react";
 
 export default function Home() {
@@ -54,24 +54,42 @@ export default function Home() {
           <h2 className="mt-3 max-w-2xl font-display text-4xl font-bold leading-tight text-cream md:text-5xl">
             Somos a solução para o seu negócio
           </h2>
+          <p className="mt-6 max-w-3xl text-lg text-mint/70">
+            Assumimos o compromisso de buscar, junto a terceiros, os créditos
+            que a sua empresa tem a receber — tirando esse desgaste da sua
+            equipe e preservando sua imagem com o mercado, seus clientes e
+            investidores. Cada caso recebe uma estratégia própria, com
+            medidas graduais, sempre pautadas pela ética e respaldadas pela
+            legislação, com foco na recuperação rápida e efetiva.
+          </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
           {[
             {
-              icon: ShieldCheck,
-              title: "Ética e compromisso",
-              text: "Atuação pautada na prestação de serviços legais, com clareza nas informações e excelência no atendimento.",
+              icon: Headset,
+              title: "Cobrança administrativa",
+              text: "Além de contar com as ferramentas mais avançadas do mercado para localizar devedores, higienizar cadastros e fazer a escoragem de risco, mantemos um sistema de cobrança totalmente integrado ao setor jurídico. Isso inclui central 0800, URA, gravação de todas as ligações, relatórios detalhados de desempenho e acionamentos, além da emissão e do envio automatizado de boletos via robô.",
+            },
+            {
+              icon: Gavel,
+              title: "Cobrança jurídica",
+              text: "Antes mesmo de judicializar, o trabalho de pesquisa avançada de bens é o que sustenta os melhores resultados do escritório — muitas vezes ele já é suficiente para convencer o devedor a fechar acordo.",
+              bullets: [
+                "Pesquisa avançada de bens, que vai além do óbvio e acelera o processo",
+                "Medidas coercitivas atípicas, aplicadas caso a caso, com resultados consistentes",
+                "Acompanhamento pessoal de diligências, garantindo o cumprimento efetivo de mandados de busca e apreensão, reintegração, imissão de posse, penhora e remoção",
+              ],
+            },
+            {
+              icon: Building2,
+              title: "Consolidação fiduciária de imóvel",
+              text: "Temos ampla experiência na retomada de bens alienados fiduciariamente, com todo o amparo jurídico e administrativo necessário para evitar os vícios que costumam suspender ou até anular o processo. A Lei 9.514/97, que rege a alienação fiduciária de bem imóvel, exige atenção a detalhes que, sem experiência, frustram credores e geram prejuízos ainda maiores — por isso cuidamos de cada etapa com rigor técnico, buscando um processo rápido e efetivo.",
             },
             {
               icon: Handshake,
-              title: "Relações preservadas",
-              text: "Buscamos os créditos que sua empresa possui com terceiros preservando sua imagem e as boas relações com o mercado.",
-            },
-            {
-              icon: TrendingUp,
-              title: "Resultados potencializados",
-              text: "Trabalho personalizado e especializado, construído sobre confiança e relações sólidas com cada cliente.",
+              title: "Relacionamento e negociação",
+              text: "Mais do que recuperar o crédito e trazer retorno financeiro, investimos em relacionamento. Em vez de uma cobrança genérica, buscamos uma negociação célere e eficaz, moldada à realidade de cada cliente e de cada negócio — o que nos permite encontrar sempre a melhor solução para as duas partes.",
             },
           ].map((c, i) => (
             <Reveal key={c.title} delay={i * 0.1}>
@@ -83,7 +101,17 @@ export default function Home() {
                 <h3 className="font-display text-xl font-bold text-cream">
                   {c.title}
                 </h3>
-                <p className="mt-3 text-mint/70">{c.text}</p>
+                <p className="mt-3 text-base leading-relaxed text-mint/70">{c.text}</p>
+                {c.bullets && (
+                  <ul className="mt-4 space-y-2.5">
+                    {c.bullets.map((b) => (
+                      <li key={b} className="flex gap-2.5 text-base leading-relaxed text-mint/70">
+                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-lime" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </Reveal>
           ))}
