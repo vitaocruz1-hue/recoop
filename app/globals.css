@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   PALETA RECOOP — ajuste os hex aqui e o site inteiro acompanha.
+   Base: verde-petróleo + verde-limão (identidade Recoop).
+   ============================================================ */
+:root {
+  --ink: #061512; /* fundo mais escuro */
+  --forest: #0b2f2a; /* verde-petróleo */
+  --emerald: #114239; /* verde profundo (cards/faixas) */
+  --moss: #1e7a5f; /* verde médio (detalhes/hovers) */
+  --lime: #b4e04a; /* verde-limão (acento/CTA) */
+  --mint: #cfe9d8; /* verde-claro (textos suaves no escuro) */
+  --cream: #f2f7f2; /* fundo claro */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--forest);
+}
+
+/* ---- Gradiente que muda de cor sozinho (nível 3) ---- */
+@keyframes hue-drift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-mesh {
+  background: linear-gradient(
+    120deg,
+    var(--forest),
+    var(--emerald),
+    var(--moss),
+    var(--emerald),
+    var(--forest)
+  );
+  background-size: 300% 300%;
+  animation: hue-drift 18s ease infinite;
+}
+
+/* ---- Brilho pulsante do acento ---- */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+}
+
+.glow-orb {
+  animation: pulse-glow 9s ease-in-out infinite;
+}
+
+/* ---- Grão sutil sobre fundos escuros ---- */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 0
+  );
+  background-size: 26px 26px;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Mapa do Brasil (contornos: @svg-maps/brazil, CC-BY-4.0) ---- */
+.brmap .st {
+  fill: #0d3d33;
+  stroke: rgba(207, 233, 216, 0.14);
+  stroke-width: 0.6;
+  transition: fill 0.3s;
+  cursor: pointer;
+}
+.brmap .st:hover {
+  fill: #17614d;
+}
+.brmap .st.on {
+  fill: #155444;
+}
+.brmap .dot {
+  fill: var(--lime);
+  filter: drop-shadow(0 0 6px rgba(180, 224, 74, 0.9));
+  pointer-events: none;
+}
+.brmap .ping {
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: none;
+}
+.brmap.play .ping {
+  animation: brping 2.6s ease-out infinite;
+}
+@keyframes brping {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.9;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+.brmap .flow {
+  fill: none;
+  stroke: rgba(180, 224, 74, 0.32);
+  stroke-width: 1.1;
+  stroke-dasharray: 3 9;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+.brmap.play .flow {
+  animation: brflow 3.2s linear infinite;
+}
+@keyframes brflow {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+.brmap .hubdot {
+  fill: var(--cream);
+  filter: drop-shadow(0 0 8px rgba(242, 247, 242, 0.9));
+  pointer-events: none;
+}
+.brmap .hubring {
+  fill: none;
+  stroke: rgba(242, 247, 242, 0.6);
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  pointer-events: none;
+}
+.brmap.play .hubring {
+  animation: brping 2.6s 1.3s ease-out infinite;
+}
+.maptip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--forest);
+  border: 1px solid rgba(180, 224, 74, 0.4);
+  color: var(--cream);
+  font-size: 0.78rem;
+  padding: 6px 10px;
+  border-radius: 10px;
+  transform: translate(-50%, -130%);
+  white-space: nowrap;
+  z-index: 5;
+}
+.maptip b {
+  color: var(--lime);
+  font-weight: 600;
+}
