@@ -17,15 +17,57 @@ import {
   MapPin,
   Clock,
   ArrowRight,
-  Sprout,
-  Users,
-  Leaf,
   Gavel,
   Building2,
   Handshake,
 } from "lucide-react";
 
-export default function Home() {
+import { getPublishedNews, type NewsItem } from "@/lib/api";
+import { getNewsVisual } from "@/lib/news-visuals";
+
+// Usado apenas se a API do backend estiver fora do ar — garante que o
+// site nunca fica sem conteúdo no blog.
+const FALLBACK_NEWS: NewsItem[] = [
+  {
+    id: "fallback-1",
+    title: "Sicoob espera liberar até R$ 49 bi de crédito rural na safra 2023/24",
+    slug: "sicoob-espera-liberar-ate-r-49-bi-de-credito-rural-na-safra-2023-24",
+    tag: "Crédito rural",
+    excerpt: "Expectativa de forte crescimento na oferta de crédito rural em diversas linhas.",
+    content: "",
+    published: true,
+    publishedAt: null,
+    createdAt: "",
+    updatedAt: "",
+  },
+  {
+    id: "fallback-2",
+    title: "Cooperativas de crédito operam em mais da metade dos municípios",
+    slug: "cooperativas-de-credito-operam-em-mais-da-metade-dos-municipios-2",
+    tag: "Cooperativismo",
+    excerpt: "O cooperativismo de crédito cresceu acima do restante do Sistema Financeiro Nacional.",
+    content: "",
+    published: true,
+    publishedAt: null,
+    createdAt: "",
+    updatedAt: "",
+  },
+  {
+    id: "fallback-3",
+    title: "A due diligence ESG",
+    slug: "a-due-diligence-esg",
+    tag: "ESG",
+    excerpt: "Integridade empresarial e agenda ESG ganharam protagonismo nos negócios.",
+    content: "",
+    published: true,
+    publishedAt: null,
+    createdAt: "",
+    updatedAt: "",
+  },
+];
+
+export default async function Home() {
+  const news = await getPublishedNews().catch(() => FALLBACK_NEWS);
   return (
     <main>
       <Navbar />
@@ -208,66 +250,45 @@ export default function Home() {
         </Reveal>
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {[
-            {
-              tag: "Crédito rural",
-              icon: Sprout,
-              tint: "bg-gradient-to-br from-moss/50 to-forest/80",
-              title:
-                "Sicoob espera liberar até R$ 49 bi de crédito rural na safra 2023/24",
-              text: "Expectativa de forte crescimento na oferta de crédito rural em diversas linhas.",
-              href: "https://recoop.com.br/sicoob-espera-liberar-ate-r-49-bi-de-credito-rural-na-safra-2023-24/",
-            },
-            {
-              tag: "Cooperativismo",
-              icon: Users,
-              tint: "bg-gradient-to-br from-emerald/70 to-forest/80",
-              title:
-                "Cooperativas de crédito operam em mais da metade dos municípios",
-              text: "O cooperativismo de crédito cresceu acima do restante do Sistema Financeiro Nacional.",
-              href: "https://recoop.com.br/cooperativas-de-credito-operam-em-mais-da-metade-dos-municipios-2/",
-            },
-            {
-              tag: "ESG",
-              icon: Leaf,
-              tint: "bg-gradient-to-br from-moss/60 to-emerald/70",
-              title: "A due diligence ESG",
-              text: "Integridade empresarial e agenda ESG ganharam protagonismo nos negócios.",
-              href: "https://recoop.com.br/a-due-diligence-esg/",
-            },
-          ].map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.1}>
-              <a
-                href={p.href}
-                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-emerald/30 backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-lime/40"
-              >
-                <div className={`relative flex h-40 items-end overflow-hidden p-6 ${p.tint}`}>
-                  <div className="animated-mesh absolute inset-0 opacity-40 transition-transform duration-700 group-hover:scale-110" />
-                  <p.icon
-                    className="pointer-events-none absolute -right-4 -top-4 text-lime/15 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6"
-                    size={112}
-                    strokeWidth={1.25}
-                  />
-                  <span className="relative rounded-full bg-lime px-3 py-1 text-xs font-semibold text-forest">
-                    {p.tag}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="font-display text-lg font-bold leading-snug text-cream transition group-hover:text-lime">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 flex-1 text-sm text-mint/70">{p.text}</p>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-lime">
-                    Ler artigo{" "}
-                    <ArrowRight
-                      size={15}
-                      className="transition-transform group-hover:translate-x-1"
+          {news.slice(0, 3).map((p, i) => {
+            const { icon: Icon, tint } = getNewsVisual(p.tag);
+            const href = p.id.startsWith("fallback-")
+              ? `https://recoop.com.br/${p.slug}/`
+              : `/blog/${p.slug}`;
+            return (
+              <Reveal key={p.id} delay={i * 0.1}>
+                <a
+                  href={href}
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-emerald/30 backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-lime/40"
+                >
+                  <div className={`relative flex h-40 items-end overflow-hidden p-6 ${tint}`}>
+                    <div className="animated-mesh absolute inset-0 opacity-40 transition-transform duration-700 group-hover:scale-110" />
+                    <Icon
+                      className="pointer-events-none absolute -right-4 -top-4 text-lime/15 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6"
+                      size={112}
+                      strokeWidth={1.25}
                     />
-                  </span>
-                </div>
-              </a>
-            </Reveal>
-          ))}
+                    <span className="relative rounded-full bg-lime px-3 py-1 text-xs font-semibold text-forest">
+                      {p.tag}
+                    </span>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-display text-lg font-bold leading-snug text-cream transition group-hover:text-lime">
+                      {p.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm text-mint/70">{p.excerpt}</p>
+                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-lime">
+                      Ler artigo{" "}
+                      <ArrowRight
+                        size={15}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </span>
+                  </div>
+                </a>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
