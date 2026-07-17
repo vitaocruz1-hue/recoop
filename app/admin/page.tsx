@@ -15,7 +15,7 @@ import {
 
 const TOKEN_KEY = "recoop_admin_token";
 
-const emptyForm = { title: "", tag: "", excerpt: "", content: "" };
+const emptyForm = { title: "", tag: "", excerpt: "", content: "", coverImage: "" };
 
 export default function AdminPage() {
   const [token, setToken] = useState<string | null>(null);
@@ -108,7 +108,13 @@ export default function AdminPage() {
 
   function startEdit(item: NewsItem) {
     setEditingId(item.id);
-    setForm({ title: item.title, tag: item.tag, excerpt: item.excerpt, content: item.content });
+    setForm({
+      title: item.title,
+      tag: item.tag,
+      excerpt: item.excerpt,
+      content: item.content,
+      coverImage: item.coverImage ?? "",
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -246,6 +252,12 @@ export default function AdminPage() {
               value={form.tag}
               onChange={(e) => setForm({ ...form, tag: e.target.value })}
               required
+            />
+            <input
+              className={input}
+              placeholder="Caminho da capa (ex.: /img/blog/minha-noticia.webp)"
+              value={form.coverImage}
+              onChange={(e) => setForm({ ...form, coverImage: e.target.value })}
             />
             <textarea
               className={`${input} min-h-20 resize-y`}

@@ -35,6 +35,7 @@ const FALLBACK_NEWS: NewsItem[] = [
     tag: "Crédito rural",
     excerpt: "Expectativa de forte crescimento na oferta de crédito rural em diversas linhas.",
     content: "",
+    coverImage: null,
     published: true,
     publishedAt: null,
     createdAt: "",
@@ -47,6 +48,7 @@ const FALLBACK_NEWS: NewsItem[] = [
     tag: "Cooperativismo",
     excerpt: "O cooperativismo de crédito cresceu acima do restante do Sistema Financeiro Nacional.",
     content: "",
+    coverImage: null,
     published: true,
     publishedAt: null,
     createdAt: "",
@@ -59,6 +61,7 @@ const FALLBACK_NEWS: NewsItem[] = [
     tag: "ESG",
     excerpt: "Integridade empresarial e agenda ESG ganharam protagonismo nos negócios.",
     content: "",
+    coverImage: null,
     published: true,
     publishedAt: null,
     createdAt: "",
@@ -261,17 +264,30 @@ export default async function Home() {
                   href={href}
                   className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-emerald/30 backdrop-blur-sm transition duration-500 hover:-translate-y-1.5 hover:border-lime/40"
                 >
-                  <div className={`relative flex h-40 items-end overflow-hidden p-6 ${tint}`}>
-                    <div className="animated-mesh absolute inset-0 opacity-40 transition-transform duration-700 group-hover:scale-110" />
-                    <Icon
-                      className="pointer-events-none absolute -right-4 -top-4 text-lime/15 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6"
-                      size={112}
-                      strokeWidth={1.25}
-                    />
-                    <span className="relative rounded-full bg-lime px-3 py-1 text-xs font-semibold text-forest">
-                      {p.tag}
-                    </span>
-                  </div>
+                  {p.coverImage ? (
+                    <div className="relative aspect-video w-full overflow-hidden rounded-t-3xl">
+                      <img
+                        src={p.coverImage}
+                        alt={p.title}
+                        className="h-full w-full object-cover"
+                      />
+                      <span className="absolute bottom-6 left-6 rounded-full bg-lime px-3 py-1 text-xs font-semibold text-forest">
+                        {p.tag}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className={`relative flex h-40 items-end overflow-hidden p-6 ${tint}`}>
+                      <div className="animated-mesh absolute inset-0 opacity-40 transition-transform duration-700 group-hover:scale-110" />
+                      <Icon
+                        className="pointer-events-none absolute -right-4 -top-4 text-lime/15 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6"
+                        size={112}
+                        strokeWidth={1.25}
+                      />
+                      <span className="relative rounded-full bg-lime px-3 py-1 text-xs font-semibold text-forest">
+                        {p.tag}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="font-display text-lg font-bold leading-snug text-cream transition group-hover:text-lime">
                       {p.title}

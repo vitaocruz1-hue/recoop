@@ -11,6 +11,7 @@ export interface NewsItem {
   tag: string;
   excerpt: string;
   content: string;
+  coverImage: string | null;
   published: boolean;
   publishedAt: string | null;
   createdAt: string;
@@ -81,7 +82,7 @@ export async function adminListNews(token: string): Promise<NewsItem[]> {
 
 export async function adminCreateNews(
   token: string,
-  data: { title: string; tag: string; excerpt: string; content: string },
+  data: { title: string; tag: string; excerpt: string; content: string; coverImage?: string },
 ): Promise<NewsItem> {
   return adminFetch("/admin/news", token, { method: "POST", body: JSON.stringify(data) });
 }
@@ -89,7 +90,7 @@ export async function adminCreateNews(
 export async function adminUpdateNews(
   token: string,
   id: string,
-  data: Partial<{ title: string; tag: string; excerpt: string; content: string }>,
+  data: Partial<{ title: string; tag: string; excerpt: string; content: string; coverImage: string }>,
 ): Promise<NewsItem> {
   return adminFetch(`/admin/news/${id}`, token, { method: "PATCH", body: JSON.stringify(data) });
 }
